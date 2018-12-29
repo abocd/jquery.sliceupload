@@ -59,7 +59,7 @@ $("#pano-file").sliceupload({
 ```
 
 ##### 参数说明
-```json
+```javascript
 {
         url: "/file/upload",
         //是否支持多文件
