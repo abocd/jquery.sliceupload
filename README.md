@@ -91,21 +91,21 @@ $("#pano-file").sliceupload({
             console.info(d)
         },
         /**
-         * 所有的完成后的回调函授
+         * 所有的完成后的回调函数
          * @param d
          */
         callback: function (d) {
             // console.info(d);
         },
         /**
-         * 检测函授
+         * 检测函数
          * @param d
          */
         checkFunction:function (d) {
             console.info(d)
         },
         /**
-         * 检测函授
+         * 检测函数
          * @returns {boolean}
          */
         checkTypeFunction: function (d) {
