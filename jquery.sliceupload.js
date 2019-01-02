@@ -129,7 +129,11 @@ $.fn.sliceupload = function (options) {
         var form = new FormData();
         // console.info("fff",fileIndex)
         console.info("slice",sliceIndex * $this.opts.sliceSize, $this.data.file[fileIndex].size, (sliceIndex + 1) * $this.opts.sliceSize);
-        form.append("data", $this.data.file[fileIndex].slice(sliceIndex * $this.opts.sliceSize, Math.min($this.data.file[fileIndex].size, (sliceIndex + 1) * $this.opts.sliceSize)));
+        if($this.opts.slice) {
+            form.append("data", $this.data.file[fileIndex].slice(sliceIndex * $this.opts.sliceSize, Math.min($this.data.file[fileIndex].size, (sliceIndex + 1) * $this.opts.sliceSize)));
+        } else {
+            form.append("data",$this.data.file[fileIndex]);
+        }
         form.append("fileIndex", fileIndex);
         form.append("name", $this.data.file[fileIndex].name);
         form.append("sliceCount", $this.data.fileInfo[fileIndex].sliceCount);
