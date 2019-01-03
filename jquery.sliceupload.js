@@ -67,11 +67,25 @@ $.fn.sliceupload = function (options) {
         }
     }
 
-    /**
-     *
-     * @type {*|jQuery}
-     */
-    this.id = $(this).prop("id");
+    if( $(this).prop("nodeName") != "INPUT" || $(this).prop("type") != "file"){
+        this.isFileInput = false;
+        if($("#sliceupload_file").length == 0){
+            $("body").append('<input type="file" id="sliceupload_file" style="display: none" />');
+        }
+        this.id = "sliceupload_file";
+    } else {
+        this.isFileInput = true;
+        /**
+         *
+         * @type {*|jQuery}
+         */
+        this.id = $(this).prop("id");
+        if(this.id == ""){
+            $(this).prop("f"+(new Date()).getTime());
+            this.id = $(this).prop("id");
+        }
+
+    }
     /**
      *
      */
@@ -123,7 +137,13 @@ $.fn.sliceupload = function (options) {
                 $this.fileMd5($this.data.file[i],i);
             }
             console.info($this.data)
-        })
+        });
+        if(!$this.isFileInput){
+            $this.click(function () {
+                $("#sliceupload_file").click();
+                return false;
+            })
+        }
     }
     this.send = function (fileIndex, sliceIndex) {
         var form = new FormData();
