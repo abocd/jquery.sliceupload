@@ -69,10 +69,12 @@ $.fn.sliceupload = function (options) {
 
     if( $(this).prop("nodeName") != "INPUT" || $(this).prop("type") != "file"){
         this.isFileInput = false;
-        if($("#sliceupload_file").length == 0){
-            $("body").append('<input type="file" id="sliceupload_file" style="display: none" />');
+        var tempId = "f"+(new Date()).getTime();
+        if($("#"+tempId+"_file").length == 0){
+            $("body").append('<input type="file" id="'+tempId+'_file" style="display: none" />');
         }
-        this.id = "sliceupload_file";
+        this.id = tempId;
+        this.fileId = tempId+'_file';
     } else {
         this.isFileInput = true;
         /**
@@ -80,6 +82,7 @@ $.fn.sliceupload = function (options) {
          * @type {*|jQuery}
          */
         this.id = $(this).prop("id");
+        this.fileId = this.id;
         if(this.id == ""){
             $(this).prop("f"+(new Date()).getTime());
             this.id = $(this).prop("id");
@@ -113,7 +116,7 @@ $.fn.sliceupload = function (options) {
     };
     this.data = null;
     this.event = function () {
-        $("body").delegate("#" + $this.id, "change", function () {
+        $("body").delegate("#" + $this.fileId, "change", function () {
             $this.data = initData;
             $this.data.file = this.files;
             console.info($this.data.file);
@@ -140,7 +143,8 @@ $.fn.sliceupload = function (options) {
         });
         if(!$this.isFileInput){
             $this.click(function () {
-                $("#sliceupload_file").click();
+                console.info("#"+$this.id+"_file click")
+                $("#"+$this.id+"_file").click();
                 return false;
             })
         }
@@ -227,7 +231,7 @@ $.fn.sliceupload = function (options) {
         }
         if (isFinished) {
             if (typeof $this.opts.callback == "function") {
-                $this.opts.callback.call({}, info,$this.data.fileInfo);
+                $this.opts.callback.call({}, info,$this.data.fileInfo,$this);
             } else {
                 alert("文件上传成功");
             }
