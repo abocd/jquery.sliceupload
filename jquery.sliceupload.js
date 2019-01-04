@@ -67,9 +67,32 @@ $.fn.sliceupload = function (options) {
         }
     }
 
+    /**
+     * 生成随机字符串
+     * @param len
+     * @param type
+     * @returns {string}
+     */
+    this.rand = function(len,type) {
+        len = len < 0 ? 0 : len;
+        type = type && type<=3? type : 3;
+        var str = '';
+        for (var i = 0; i < len; i++) {
+            var j = Math.ceil(Math.random()*type);
+            if (j == 1) {
+                str += Math.ceil(Math.random()*9);
+            } else if (j == 2) {
+                str += String.fromCharCode(Math.ceil(Math.random()*25+65));
+            } else {
+                str += String.fromCharCode(Math.ceil(Math.random()*25+97));
+            }
+        }
+        return str.toLowerCase();
+    }
+
     if( $(this).prop("nodeName") != "INPUT" || $(this).prop("type") != "file"){
         this.isFileInput = false;
-        var tempId = "f"+(new Date()).getTime();
+        var tempId = "u_"+this.rand(8);
         if($("#"+tempId+"_file").length == 0){
             $("body").append('<input type="file" id="'+tempId+'_file" style="display: none" />');
         }
@@ -84,7 +107,7 @@ $.fn.sliceupload = function (options) {
         this.id = $(this).prop("id");
         this.fileId = this.id;
         if(this.id == ""){
-            $(this).prop("f"+(new Date()).getTime());
+            $(this).prop( "u_"+this.rand(8));
             this.id = $(this).prop("id");
         }
 
@@ -256,6 +279,7 @@ $.fn.sliceupload = function (options) {
         // console.info(uploadedSlice, totalSlice);
         return showPercent(uploadedSlice / totalSlice * 100);
     }
+
     /**
      * 当前文件的进度
      * @param fileIndex
