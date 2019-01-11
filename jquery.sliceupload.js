@@ -98,7 +98,10 @@ $.fn.sliceupload = function (options) {
         this.isFileInput = false;
         var tempId = "u_"+this.rand(8);
         if($("#"+tempId+"_file").length == 0){
-            $("body").append('<input type="file" id="'+tempId+'_file" style="display: none" />');
+            console.info("multiple","#"+tempId+"_file",$(this).data("multiple"));
+            var multiple = $(this).data("multiple") == true?"multiple":"";
+            console.info('<input type="file" id="'+tempId+'_file" '+multiple+' style="display: none" />')
+            $("body").append('<input type="file" id="'+tempId+'_file" '+multiple+' style="display: none" />');
         }
         this.id = tempId;
         this.fileId = tempId+'_file';
