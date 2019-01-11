@@ -30,6 +30,10 @@ $.fn.sliceupload = function (options) {
          */
         appendServer: {aboc: 1},
         /**
+         * 外部数据，用于回调
+         */
+        extData:null,
+        /**
          * 上传过程中的函数
          * @param d
          */
